@@ -4,5 +4,5 @@
  <ul style="list-style-type:circle">
   <li>Łukasz CZERNISZEWSKI - TeamLider</li>
   <li>Krzysztof KRASECKI  - TeamMember</li>
-  <li>Aleksander PACZEŚNIEWSKI  - TeamMember</li>
+  <li>Aleksander PACZEŚNIOWSKI  - TeamMember</li>
 </ul>
