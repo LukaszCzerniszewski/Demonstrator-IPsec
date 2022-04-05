@@ -1,13 +1,14 @@
 import socket
 import pickle
 from esp import Esp
-
-
-class server():
+import os
+import sys
+class Server():
     #ownIpAdress = "192.168.1.2"
     localPort   = 80
     bufferSize  = 1024
     serverStatus = True
+    msgBuffor = None
     def __init__(self,ownIpAdress):
         self.ownIpAdress = ownIpAdress
 
@@ -24,7 +25,9 @@ class server():
             address = bytesAddressPair[1]
             clientIP  = "Client IP Address:{}".format(address)
             print(clientIP)
-            mess =pickle.loads(message)
+            self.msgBuffor =pickle.loads(message)
+            print(self.msgBuffor)
+            sys.stdout.write('gfg')
             # Sending a reply to client
             #UDPServerSocket.sendto(bytesToSend, address)
     
@@ -34,8 +37,8 @@ class server():
 
 #udp klient to send pakiets
 class Client():
-    def sendMesseng(self,dstIp,data):   
-        dstIp = "192.168.1.2" 
+    def sendMesseng(dstIp,data):   
+        #dstIp = "192.168.1.2" 
         serverAddressPort   = (dstIp, 80)
         bufferSize          = 1024
         # Create a UDP socket at client side
