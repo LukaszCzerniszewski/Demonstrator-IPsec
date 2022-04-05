@@ -1,14 +1,17 @@
 from flask import Flask, render_template
-import engine
+import communication
 app = Flask(__name__)
 app.run(debug=True)
 @app.route("/")
 def home():
-    return engine.hello()
+    
+    return render_template('index.html')
+    #return engine.hello()
 
 @app.route("/elo")
 def nara():
-    return render_template('index.html')
+    return 'Weronika <3'
+    #return render_template('index.html')
 
 if __name__ == '__main__':
-   app.run()
+   app.run(debug=True)
