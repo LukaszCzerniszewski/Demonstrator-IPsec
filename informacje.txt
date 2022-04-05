@@ -1,0 +1,2 @@
+Aby uruchomić w całej sieci  python -m flask run --host=0.0.0.0
+Zaleca się uruchumianie tylk na swoim pc przy pomocy python flash run
