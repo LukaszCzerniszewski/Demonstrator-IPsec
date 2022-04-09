@@ -9,8 +9,9 @@ class Server():
     bufferSize  = 1024
     serverStatus = True
     msgBuffor = None
-    def __init__(self,ownIpAdress):
+    def __init__(self,ownIpAdress, quote):
         self.ownIpAdress = ownIpAdress
+        self.quote=quote
 
     
     def start(self):
@@ -27,7 +28,7 @@ class Server():
             print(clientIP)
             self.msgBuffor =pickle.loads(message)
             print(self.msgBuffor)
-            sys.stdout.write('gfg')
+            self.quote.put(self.msgBuffor)
             # Sending a reply to client
             #UDPServerSocket.sendto(bytesToSend, address)
     
