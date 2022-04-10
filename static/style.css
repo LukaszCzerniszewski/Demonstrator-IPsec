@@ -90,7 +90,10 @@ body{
 
 .chat .chat-history {
     padding: 20px;
-    border-bottom: 2px solid #fff
+    border-bottom: 2px solid #fff;
+    width: 1200px;
+    height: 400px;
+    overflow:scroll;
 }
 
 .chat .chat-history ul {
@@ -106,6 +109,11 @@ body{
     margin-bottom: 0px
 }
 
+.chat .chat-history .message-data-right {
+    margin-bottom: 15px;
+    text-align: right;
+}
+
 .chat .chat-history .message-data {
     margin-bottom: 15px
 }
@@ -119,6 +127,8 @@ body{
     color: #434651;
     padding-left: 6px
 }
+
+
 
 .chat .chat-history .message {
     color: #444;
