@@ -1,119 +1,126 @@
+<!--  how to use css in python_ flask-->
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="/styles.css">
-</head>
-<div class="menu">
-  <div class="back"><i class="fa fa-chevron-left"></i> <img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-  <div class="name">Alex</div>
-  <div class="last">18:09</div>
+<!--  Load CSS in Flask with html-->
+    <link rel="stylesheet" href='/static/style.css' />
+ 
+<!--  Load JavaScript in Flask with html-->
+  <script>
+    alert("Page has been loaded successfully")
+  </script>
+ 
+  </head>
+
+<div class="container">
+<div class="row clearfix">
+    <div class="col-lg-12">
+        <div class="card chat-app">
+            <div id="plist" class="people-list">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Search...">
+                </div>
+                <ul class="list-unstyled chat-list mt-2 mb-0">
+                    <li class="clearfix">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                        <div class="about">
+                            <div class="name">Vincent Porter</div>
+                            <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>                                            
+                        </div>
+                    </li>
+                    <li class="clearfix active">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                        <div class="about">
+                            <div class="name">Aiden Chavez</div>
+                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
+                        <div class="about">
+                            <div class="name">Mike Thomas</div>
+                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                        </div>
+                    </li>                                    
+                    <li class="clearfix">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+                        <div class="about">
+                            <div class="name">Christian Kelly</div>
+                            <div class="status"> <i class="fa fa-circle offline"></i> left 10 hours ago </div>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="avatar">
+                        <div class="about">
+                            <div class="name">Monica Ward</div>
+                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
+                        <div class="about">
+                            <div class="name">Dean Henry</div>
+                            <div class="status"> <i class="fa fa-circle offline"></i> offline since Oct 28 </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                            </a>
+                            <div class="chat-about">
+                                <h6 class="m-b-0">Aiden Chavez</h6>
+                                <small>Last seen: 2 hours ago</small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 hidden-sm text-right">
+                            <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-history">
+                    <ul class="m-b-0">
+                        <li class="clearfix">
+                            <div class="message-data text-right">
+                                <span class="message-data-time">10:10 AM, Today</span>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+                            </div>
+                            <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="message-data">
+                                <span class="message-data-time">10:12 AM, Today</span>
+                            </div>
+                            <div class="message my-message">Are we meeting today?</div>                                    
+                        </li>                               
+                        <li class="clearfix">
+                            <div class="message-data">
+                                <span class="message-data-time">10:15 AM, Today</span>
+                            </div>
+                            <div class="message my-message">Project has been already finished and I have results to show you.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chat-message clearfix">
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-send"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Enter text here...">                                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<ol class="chat">
-<li class="other">
-<div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-<div class="msg">
-<p>Hola!</p>
-<p>Te vienes a cenar al centro? <emoji class="pizza"/></p>
-<time>20:17</time>
 </div>
-</li>
-<li class="self">
-<div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-<div class="msg">
-<p>Puff...</p>
-<p>Aún estoy haciendo el contexto de Góngora... <emoji class="books"/></p>
-<p>Mejor otro día</p>
-<time>20:18</time>
-</div>
-</li>
-<li class="other">
-<div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-<div class="msg">
-<p>Qué contexto de Góngora? <emoji class="suffocated"/></p>
-<time>20:18</time>
-</div>
-</li>
-<li class="self">
-<div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-<div class="msg">
-<p>El que mandó Marialu</p>
-<p>Es para mañana...</p>
-<time>20:18</time>
-</div>
-</li>
-<li class="other">
-<div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-<div class="msg">
-<p><emoji class="scream"/></p>
-<p>Pásamelo! <emoji class="please"/></p>
-<time>20:18</time>
-</div>
-</li>
-<li class="self">
-<div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-<div class="msg">
-<img src="https://i.imgur.com/QAROObc.jpg" draggable="false"/>
-<time>20:19</time>
-</div>
-</li>
-<li class="other">
-<div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-<div class="msg">
-<p>Gracias! <emoji class="hearth_blue"/></p>
-<time>20:20</time>
-</div>
-</li>
-<div class="day">Hoy</div>
-<li class="self">
-<div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-<div class="msg">
-<p>Te apetece jugar a Minecraft?</p>
-<time>18:03</time>
-</div>
-</li>
-<li class="other">
-<div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-<div class="msg">
-<p>Venga va, hace ya mucho que no juego...</p>
-<time>18:07</time>
-</div>
-</li>
-<li class="self">
-<div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-<div class="msg">
-<p>Ehh, me crashea el Launcher... <emoji class="cryalot"/></p>
-<time>18:08</time>
-</div>
-</li>
-<li class="other">
-<div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-<div class="msg">
-<p><emoji class="lmao"/></p>
-<time>18:08</time>
-</div>
-</li>
-<li class="self">
-<div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-<div class="msg">
-<p>Es broma</p>
-<p>Ataque Moai!</p>
-<p><span><emoji class="moai"/></span><span><emoji class="moai"/></span><span><emoji class="moai"/></span><span><emoji class="moai"/></span><span><emoji class="moai"/></span><span><emoji class="moai"/></span></p>
-<time>18:09</time>
-</div>
-</li>
-<li class="other">
-<div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-<div class="msg">
-<p>Copón</p>
-<p><emoji class="funny"/></p>
-<time>18:08</time>
-</div>
-</li>
-<li class="self">
-<div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-<div class="msg">
-<p>Hey there's a new update about this chat UI with more responsive elements! Check it now:</p>
-<p><a href="https://codepen.io/Varo/pen/YPmwpQ" target="parent">Chat UI 2.0</a></p>
-<time>18:09</time>
-</div>
-</li>
-</ol>
-<input class="textarea" type="text" placeholder="Type here!"/><div class="emojis"></div>
