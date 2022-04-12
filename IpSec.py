@@ -1,19 +1,11 @@
 from datetime import datetime
-
 import pickle
-
 import copy
-
 import socket
-
 from scapy.compat import raw
-
 from scapy.layers.inet import IP, TCP, UDP
-
 from scapy.layers.ipsec import SecurityAssociation, ESP, AH
-
 from scapy.packet import Raw
-
 from scapy.sendrecv import send, sr
 
 
