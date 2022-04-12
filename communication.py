@@ -1,6 +1,5 @@
 import socket
 import pickle
-from IpSec import Esp
 import os
 import sys
 class Server():
@@ -25,10 +24,10 @@ class Server():
             message = bytesAddressPair[0]
             address = bytesAddressPair[1]
             clientIP  = "Client IP Address:{}".format(address)
-            print(clientIP)
-            self.msgBuffor =pickle.loads(message)
-            print(self.msgBuffor)
-            self.quote.put(self.msgBuffor)
+            #print(clientIP)
+            #self.msgBuffor =pickle.loads(message)
+            #print(self.msgBuffor)
+            self.quote.put(message)
             # Sending a reply to client
             #UDPServerSocket.sendto(bytesToSend, address)
     
@@ -45,7 +44,7 @@ class Client():
         # Create a UDP socket at client side
         UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         # Send to server using created UDP socket
-        UDPClientSocket.sendto(pickle.dumps(data), serverAddressPort)
+        UDPClientSocket.sendto(data, serverAddressPort)
         #Answer from server
         #msgFromServer = UDPClientSocket.recvfrom(bufferSize)
        # msg = "Message from Server {}".format(msgFromServer[0])
