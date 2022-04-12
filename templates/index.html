@@ -11,6 +11,8 @@
   </script>
  
   </head>
+  {% block content  %}
+                   
   <div class="row clearfix">
       <h1 style="text-align:center" >IPsec Communicator</h1>
       
@@ -33,15 +35,14 @@
                     </div>
 
                     <!-- Add new Kontakt -->
-                    {% block content  %}
-
+                  
                     <form method="post" action="/">
                         <p><input type="text" name = "newContactname" placeholder="Name"  ></p>
                         <p><input type="text"  name = "newContactIp" placeholder="Ip addres"></p>
                         <input type="submit" value="Add" name="action1" />
                     </form>
-                    
-                    {% endblock %}
+                
+               
                 </div>
               
                 <ul class="list-unstyled chat-list mt-2 mb-0">
@@ -103,7 +104,12 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-send"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter text here...">                                    
+                    
+                        <form method="post" action="/">
+                            <p><input type="text" name = "msg" placeholder="Enter text here..." class="form-control" >
+                            <input type="submit" value="Send" name="action2" /></p>
+                        </form>   
+                                        
                     </div>
                 </div>
             </div>
@@ -111,3 +117,4 @@
     </div>
 </div>
 </div>
+{% endblock %} 

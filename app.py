@@ -40,12 +40,21 @@ def home():
     if request.method == 'POST':
         if request.form.get('action1') == 'Add':
             contakt = Contac(request.form["newContactname"],request.form["newContactIp"])
-            print('Jestem w zapytaniu', contakt.name, contakt.idAddress  , flush=True)
+            print('Jestem w zapytaniu', contakt.name, contakt.idAddress , flush=True)
             # db.session.add (contakt )
             # db.session.commit()     
 
 
             return render_template('index.html')
+           
+        elif request.form.get("action2") == "Send" :
+            msg = request.form["msg"]
+            print('Widomosc do wysania = ', msg , flush=True)
+            # db.session.add (contakt )
+            # db.session.commit()     
+
+
+            return render_template('index.html')    
 
 
         # if request.form.get("addNewContact") == "Dodaj":
@@ -61,3 +70,4 @@ def home():
 if __name__ == '__main__':
     #db.create_all()
     app.run(debug=True)
+    

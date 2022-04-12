@@ -219,6 +219,11 @@ body{
     height: 0
 }
 
+.form-control{
+    width: 1400px;
+    height: 100px;
+}
+
 @media only screen and (max-width: 767px) {
     .chat-app .people-list {
         height: 465px;
