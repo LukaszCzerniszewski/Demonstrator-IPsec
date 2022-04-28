@@ -52,6 +52,8 @@ class IpSec:
 
         p = IP(src=self.srcIP , dst=self.dstIP )
 
+        p = IP('192.168.1.1' , dst='192.168.1.1' )
+
         p /= TCP(sport=81, dport=80)
 
         p /= Raw(self.data)
