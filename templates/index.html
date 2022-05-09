@@ -31,30 +31,29 @@
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa fa-search"></i></span>
-                    <h2>Add new Contact</h2>   
+                    <h2>Insert Ip of person you wanna talk</h2>   
                     </div>
 
                     <!-- Add new Kontakt -->
                   
                     <form method="post" action="/">
-                        <p><input type="text" name = "newContactname" placeholder="Name"  ></p>
+                        <!-- <p><input type="text" name = "newContactname" placeholder="Name"  ></p> -->
                         <p><input type="text"  name = "newContactIp" placeholder="Ip addres"></p>
                         <input type="submit" value="Add" name="action1" />
                     </form>
                 
-               
                 </div>
-              
+<!--               
                 <ul class="list-unstyled chat-list mt-2 mb-0">
                     
                     <li class="clearfix">
                         <img src="static/avatarLeft.png" alt="avatar">
                         <div class="about">
-                            <div class="name">Vincent Porter</div>                                      
+                            <div class="name">Your partner to taki taki</div>                                      
                         </div>
                     </li>
                     
-                </ul>
+                </ul> -->
             </div>
             <!-- Koniec konkaktow -->
 
@@ -68,7 +67,7 @@
                             </a>
                             <!-- Osoba z którą obecnie się pisze -->
                             <div class="chat-about">
-                                <h6 class="m-b-0">Aiden Chavez</h6>
+                                <h6 class="m-b-0">Your partner to taki taki</h6>
                             </div>
                         </div>
                         <div class="col-lg-6 hidden-sm text-right">
@@ -82,18 +81,25 @@
                 <!-- Okienko czatu  -->
                 <div class="chat-history">
                     <ul class="m-b-0">
-                        <li class="clearfix">
-                            <div class="message-data-right">
-                                <span class="message-data-time">10:10 AM, Today</span>
-                            </div>
-                            <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
-                        </li>
-                        <li class="clearfix">
-                            <div class="message-data">
-                                <span class="message-data-time">10:12 AM, Today</span>
-                            </div>
-                            <div class="message my-message">Are we meeting today?</div>                                    
-                        </li>                               
+                        {% for your_list_element in your_list %}
+                       
+            
+
+                    
+                                {% if your_list_element.side == 'P' %}
+                                <li class="clearfix">
+                                    <div class="message other-message float-right"> <p>{{ your_list_element.data }} </p> </div>
+                                </li>
+                                {% else %}
+                                <li class="clearfix">
+                                    <div class="message my-message">  <p>{{ your_list_element.data }} </p> </div>
+                                </li>
+                            
+                                {% endif %}
+                           
+                        
+                        {% endfor %}
+                                                
                         
                     </ul>
                 </div>
