@@ -2,12 +2,7 @@ from datetime import datetime
 import pickle
 import copy
 import socket
-from scapy.compat import raw
-from scapy.layers.inet import IP, TCP, UDP
-from scapy.layers.ipsec import SecurityAssociation, ESP, AH
-from scapy.packet import Raw
-from scapy.sendrecv import send, sr
-
+from scapy import all as scapy
 
 
 
@@ -36,8 +31,6 @@ class IpSec:
 
         return pickle.loads(bytesString)
 
-    
-
 
 
 
@@ -50,17 +43,17 @@ class IpSec:
 
         #print(str(srcIp),self.data.dstIP)
 
-        p = IP(src=self.srcIP , dst=self.dstIP )
+        p = scapy.IP(src=self.srcIP , dst=self.dstIP )
 
-        p = IP('192.168.1.1' , dst='192.168.1.1' )
+        #p = IP('192.168.1.1' , dst='192.168.1.1' )
 
-        p /= TCP(sport=81, dport=80)
+        p /= scapy.TCP(sport=81, dport=80)
 
-        p /= Raw(self.data)
+        p /= scapy.Raw(self.data)
 
-        p = IP(raw(p))
+        p = scapy.IP(scapy.raw(p))
 
-        sa = SecurityAssociation(ESP, spi=0xdeadbeef, crypt_algo='AES-CBC', crypt_key=key)
+        sa = scapy.SecurityAssociation(scapy.ESP, spi=0xdeadbeef, crypt_algo='AES-CBC', crypt_key=key)
 
         e = sa.encrypt(p)
 
@@ -74,7 +67,7 @@ class IpSec:
 
         key = b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd'
 
-        sa = SecurityAssociation(ESP, spi=0xdeadbeef, crypt_algo='AES-CBC', crypt_key=key)
+        sa = scapy.SecurityAssociation(scapy.ESP, spi=0xdeadbeef, crypt_algo='AES-CBC', crypt_key=key)
 
         d = sa.decrypt(self.data)
 
@@ -85,16 +78,12 @@ class IpSec:
 
 
 
-
 class Messeng():
 
     def __init__(self,msg,srcIP,dstIP):
 
         self.msg = msg
 
-        
-
-    
 
     def toBytes(self):
 

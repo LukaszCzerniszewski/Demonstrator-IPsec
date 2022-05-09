@@ -7,6 +7,7 @@ import communication
 import sqlite3
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
+your_list= []
 #app.run(debug=True)
 
 #Podłączenie do bazy danych z kontaktami
@@ -34,9 +35,21 @@ class Contac():
         self.name = name
         self.idAddress = idAddress
 
+class Messeng():
+
+    def __init__(self,side,data):
+        self.side=side
+        self.data= data
+        
+
 @app.route("/", methods=["POST","GET"])
 def home():
     print('Strona Głowna', flush=True)
+
+    
+    #return render_template('your_view.html', your_list=your_list)
+
+
     if request.method == 'POST':
         if request.form.get('action1') == 'Add':
             contakt = Contac(request.form["newContactname"],request.form["newContactIp"])
@@ -45,23 +58,24 @@ def home():
             # db.session.commit()     
 
 
-            return render_template('index.html')
+            return render_template('index.html',your_list=your_list)
            
         elif request.form.get("action2") == "Send" :
             msg = request.form["msg"]
             print('Widomosc do wysania = ', msg , flush=True)
+            your_list.append(Messeng('P',msg))
             # db.session.add (contakt )
             # db.session.commit()     
 
 
-            return render_template('index.html')    
+            return render_template('index.html',your_list=your_list)    
 
 
         # if request.form.get("addNewContact") == "Dodaj":
     
     else:
         print('Nie udało się pobrać', flush=True)    
-        return render_template('index.html')
+        return render_template('index.html',your_list=your_list)
     #return engine.hello()
 
 

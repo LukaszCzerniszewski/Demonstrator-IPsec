@@ -1,20 +1,11 @@
-import os
 
-import subprocess
 
 import time
 
-from itertools import count
 
 from queue import Queue
 
 from threading import Thread
-
-
-
-from scapy.layers.ipsec import AH, ESP, SecurityAssociation
-
-
 
 import communication
 
@@ -70,8 +61,6 @@ if __name__ == "__main__":
 
         counter+=1
 
-
-
         pakiet = IpSec(data ,'127.0.0.1')
 
         pakiet.encryptdata(None)
@@ -100,7 +89,8 @@ if __name__ == "__main__":
 
 
 
-        #zawartosc = Messeng.fromBytes(odszyfrowana.data)
+        #zawartosc = Messeng.fromBytes(odszyfrowana.data)ps -a
+
 
         
 
