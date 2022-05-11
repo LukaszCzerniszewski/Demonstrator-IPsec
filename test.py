@@ -1,16 +1,9 @@
 
-
 import time
-
-
 from queue import Queue
-
 from threading import Thread
-
 import communication
-
 from IpSec import IpSec, Messeng
-
 
 
 
@@ -41,7 +34,7 @@ if __name__ == "__main__":
 
     q = Queue()
 
-    t1 = Thread(target = serwer, args =(q, ))
+    t1 = Thread(target = serwer, args =(q,))
 
     #t2 = Thread(target = client, args =(q,messeng))
 
@@ -53,9 +46,9 @@ if __name__ == "__main__":
 
     while True:
 
-        
+        print('d')
 
-        time.sleep(1)
+       
 
         data = 'Zaszyfrowana wiadomosc numer ' + str(counter)
 
@@ -70,8 +63,10 @@ if __name__ == "__main__":
         #sa = SecurityAssociation(ESP, spi=0xdeadbeef, crypt_algo='AES-CBC', crypt_key=b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd')
 
    
-
+        time.sleep(3)
         communication.Client.sendMesseng('127.0.0.1',pakiet.toBytes())
+
+     
 
         odczyatana  = IpSec.fromBytes(q.get())
 

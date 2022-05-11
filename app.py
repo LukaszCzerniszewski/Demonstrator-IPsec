@@ -5,6 +5,10 @@ from flask import Flask, render_template, request
 #from flask_sqlalchemy import SQLAlchemy
 import communication
 import sqlite3
+import time
+from queue import Queue
+from threading import Thread
+from IpSec import IpSec, Messeng
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 your_list= []
@@ -79,9 +83,52 @@ def home():
     #return engine.hello()
 
 
+def serwer(quote): 
+    srv = communication.Server('localhost',quote)
+    srv.start()
+    
 
+def client(quote,messeng):
+    communication.Client.sendMesseng('localhost',messeng)
+
+def test():
+    counter = 1
+
+    while True:
+
+        print('d', flush=True) 
+
+        time.sleep(1)
+
+        data = 'Zaszyfrowana wiadomosc numer ' + str(counter)
+
+        counter+=1
+
+        pakiet = IpSec(data ,'127.0.0.1')
+
+        pakiet.encryptdata(None)
+
+        communication.Client.sendMesseng('127.0.0.1',pakiet.toBytes())
+
+        odczyatana  = IpSec.fromBytes(q.get())
+
+        print("Wiadomosc  odczyatana",odczyatana.data, flush=True) 
+
+
+
+
+
+        odszyfrowana = odczyatana.decryptdata(None)
+
+        print("Wiadomosc  odszyfrowana",type(odszyfrowana.data), flush=True) 
+
+        print("Wiadomosc  odszyfrowana",odszyfrowana.data, flush=True) 
 
 if __name__ == '__main__':
     #db.create_all()
+    q = Queue()
+    t1 = Thread(target = serwer, args =(q,))
+    t2 = Thread(target = test, args =())
+    t1.start()
     app.run(debug=True)
     

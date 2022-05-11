@@ -3,8 +3,8 @@ import pickle
 import os
 import sys
 class Server():
-    #ownIpAdress = "192.168.1.2"
-    localPort   = 80
+    ownIpAdress = "127.0.0.1"
+    localPort   = 5005
     bufferSize  = 1024
     serverStatus = True
     msgBuffor = None
@@ -13,41 +13,44 @@ class Server():
         self.quote=quote
 
     
-    def start(self):
-        # Create a datagram socket
-        UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-        # Bind to address and ip
-        UDPServerSocket.bind((self.ownIpAdress, self.localPort))
-        print("UDP server up and listening")
-        while(True and self.serverStatus == True):
-            bytesAddressPair = UDPServerSocket.recvfrom(self.bufferSize)
-            message = bytesAddressPair[0]
-            address = bytesAddressPair[1]
-            clientIP  = "Client IP Address:{}".format(address)
-            #print(clientIP)
-            #self.msgBuffor =pickle.loads(message)
-            #print(self.msgBuffor)
-            self.quote.put(message)
-            # Sending a reply to client
-            #UDPServerSocket.sendto(bytesToSend, address)
-    
+    def start(self): 
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((self.ownIpAdress, self.localPort))
+        s.listen(1)
+        while (True and self.serverStatus == True):
+            conn, addr = s.accept()
+            #print ('Connection address:', addr)
+            data = conn.recv(self.bufferSize )
+            if not data: break
+            self.quote.put(data)
+            #print ("received data:", data)
+            conn.send(pickle.dumps('repo'))  # echo
+            conn.close()
+     
+        conn.close()
+     
+            
+            
     def stop(self):
         self.serverStatus = False
 
 
-#udp klient to send pakiets
+
 class Client():
     def sendMesseng(dstIp,data):   
-        #dstIp = "192.168.1.2" 
-        serverAddressPort   = (dstIp, 80)
-        bufferSize          = 1024
-        # Create a UDP socket at client side
-        UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-        # Send to server using created UDP socket
-        UDPClientSocket.sendto(data, serverAddressPort)
-        #Answer from server
-        #msgFromServer = UDPClientSocket.recvfrom(bufferSize)
-       # msg = "Message from Server {}".format(msgFromServer[0])
-       #print(msg)
+        TCP_PORT = 5005
+        BUFFER_SIZE = 1024
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((dstIp, TCP_PORT))
+        s.send(data)
+        data = s.recv(BUFFER_SIZE)
+        #s.close()
+        print ("received data:", data)
 
 
+
+
+
+
+
+  
