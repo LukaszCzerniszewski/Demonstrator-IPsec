@@ -2,6 +2,7 @@ import socket
 import pickle
 import os
 import sys
+from IpSec import IpSec, Messeng
 class Server():
     ownIpAdress = "127.0.0.1"
     localPort   = 5005
@@ -22,7 +23,10 @@ class Server():
             #print ('Connection address:', addr)
             data = conn.recv(self.bufferSize )
             if not data: break
-            self.quote.put(data)
+            odczyatana  = IpSec.fromBytes(data)
+            odszyfrowana = odczyatana.decryptdata(None)
+            self.quote.put(odszyfrowana.data)
+            #self.quote.put(data)
             #print ("received data:", data)
             conn.send(pickle.dumps('repo'))  # echo
             conn.close()
@@ -44,7 +48,7 @@ class Client():
         s.connect((dstIp, TCP_PORT))
         s.send(data)
         data = s.recv(BUFFER_SIZE)
-        #s.close()
+        s.close()
         print ("received data:", data)
 
 

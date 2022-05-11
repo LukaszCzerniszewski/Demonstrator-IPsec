@@ -12,6 +12,7 @@ from IpSec import IpSec, Messeng
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 your_list= []
+
 #app.run(debug=True)
 
 #Podłączenie do bazy danych z kontaktami
@@ -52,7 +53,8 @@ def home():
 
     
     #return render_template('your_view.html', your_list=your_list)
-
+    while not  reciveQueue.empty():
+        your_list.insert(0,Messeng('L',reciveQueue.get())) 
 
     if request.method == 'POST':
         if request.form.get('action1') == 'Add':
@@ -60,14 +62,14 @@ def home():
             print('Jestem w zapytaniu', contakt.name, contakt.idAddress , flush=True)
             # db.session.add (contakt )
             # db.session.commit()     
-
-
             return render_template('index.html',your_list=your_list)
            
         elif request.form.get("action2") == "Send" :
             msg = request.form["msg"]
             print('Widomosc do wysania = ', msg , flush=True)
-            your_list.append(Messeng('P',msg))
+            if msg !="":
+                your_list.insert(0,Messeng('P',msg))
+                client(msg)
             # db.session.add (contakt )
             # db.session.commit()     
 
@@ -83,22 +85,25 @@ def home():
     #return engine.hello()
 
 
-def serwer(quote): 
-    srv = communication.Server('localhost',quote)
+def serwer(quote,reciveQueue): 
+    srv = communication.Server('localhost',reciveQueue)
+
     srv.start()
     
 
-def client(quote,messeng):
-    communication.Client.sendMesseng('localhost',messeng)
+def client(messeng):
+    pakiet = IpSec(messeng ,'127.0.0.1')
+    pakiet.encryptdata(None)
+    communication.Client.sendMesseng('localhost',pakiet.toBytes())
 
-def test():
+def test(reciveQueue):
     counter = 1
 
     while True:
 
         print('d', flush=True) 
 
-        time.sleep(1)
+        time.sleep(4)
 
         data = 'Zaszyfrowana wiadomosc numer ' + str(counter)
 
@@ -110,25 +115,29 @@ def test():
 
         communication.Client.sendMesseng('127.0.0.1',pakiet.toBytes())
 
-        odczyatana  = IpSec.fromBytes(q.get())
+        # odczyatana  = IpSec.fromBytes(q.get())
+        
+        #print("Wiadomosc  odczyatana",odczyatana.data, flush=True) 
 
-        print("Wiadomosc  odczyatana",odczyatana.data, flush=True) 
+        # odszyfrowana = odczyatana.decryptdata(None)
 
+        #print("Wiadomosc  odszyfrowana",type(odszyfrowana.data), flush=True) 
 
-
-
-
-        odszyfrowana = odczyatana.decryptdata(None)
-
-        print("Wiadomosc  odszyfrowana",type(odszyfrowana.data), flush=True) 
-
-        print("Wiadomosc  odszyfrowana",odszyfrowana.data, flush=True) 
+        # print("Wiadomosc  odszyfrowana",odszyfrowana.data, flush=True) 
+        # reciveQueue.put(odszyfrowana.data)
+    
 
 if __name__ == '__main__':
     #db.create_all()
     q = Queue()
-    t1 = Thread(target = serwer, args =(q,))
-    t2 = Thread(target = test, args =())
+    reciveQueue= Queue()
+  
+    t1 = Thread(target = serwer, args =(q,reciveQueue,))
+    #t2 = Thread(target = test, args =(reciveQueue,))
+    t3 = Thread(target = app.run, args =())
     t1.start()
-    app.run(debug=True)
+    #t2.start()
+    t3.start()
+    
+    #app.run(debug=True)
     
