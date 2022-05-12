@@ -81,8 +81,9 @@ class IpSec:
 class Messeng():
 
     def __init__(self,msg,srcIP,dstIP):
-
         self.msg = msg
+        self.srcIP = srcIP
+        self.dstIP = dstIP
 
 
     def toBytes(self):
@@ -101,3 +102,6 @@ class Messeng():
 
         return pickle.loads(bytesString)
 
+
+
+  

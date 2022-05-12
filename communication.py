@@ -25,7 +25,7 @@ class Server():
             if not data: break
             odczyatana  = IpSec.fromBytes(data)
             odszyfrowana = odczyatana.decryptdata(None)
-            self.quote.put(odszyfrowana.data)
+            self.quote.put(Messeng(odszyfrowana.data,str(addr[0]),str(self.ownIpAdress)))
             #self.quote.put(data)
             #print ("received data:", data)
             conn.send(pickle.dumps('repo'))  # echo
