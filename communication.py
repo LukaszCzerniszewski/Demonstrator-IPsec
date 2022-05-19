@@ -24,8 +24,8 @@ class Server():
             data = conn.recv(self.bufferSize )
             if not data: break
             odczyatana  = IpSec.fromBytes(data)
-            odszyfrowana = odczyatana.decryptdata(None)
-            self.quote.put(Messeng(odszyfrowana.data,str(addr[0]),str(self.ownIpAdress)))
+          
+            self.quote.put(Messeng(odczyatana,str(addr[0]),str(self.ownIpAdress)))
             #self.quote.put(data)
             #print ("received data:", data)
             conn.send(pickle.dumps('repo'))  # echo
@@ -46,6 +46,7 @@ class Client():
         BUFFER_SIZE = 1024
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((dstIp, TCP_PORT))
+       
         s.send(data)
         data = s.recv(BUFFER_SIZE)
         s.close()

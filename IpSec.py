@@ -8,7 +8,7 @@ from scapy import all as scapy
 
 
 class IpSec:
-
+    
     def __init__(self, data,dstIP):
 
         self.data = data #Obiekty klasy Messeng zaszyfrowane lub nie
@@ -19,7 +19,7 @@ class IpSec:
 
         self.time = datetime.now
 
-    
+  
 
     def toBytes(self):
 
@@ -35,7 +35,7 @@ class IpSec:
 
 
 
-    def encryptdata(self, key):
+    def encryptdata(self, key, spi):
 
         key = b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd'
 
@@ -53,21 +53,21 @@ class IpSec:
 
         p = scapy.IP(scapy.raw(p))
 
-        sa = scapy.SecurityAssociation(scapy.ESP, spi=0xdeadbeef, crypt_algo='AES-CBC', crypt_key=key)
+        sa = scapy.SecurityAssociation(scapy.ESP, spi= spi, crypt_algo='AES-CBC', crypt_key=key)
 
         e = sa.encrypt(p)
-
+        print('e',e, flush=True)
         self.data = e
 
         return self
 
 
 
-    def decryptdata(self, key):
+    def decryptdata(self, key, spi):
 
         key = b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd'
 
-        sa = scapy.SecurityAssociation(scapy.ESP, spi=0xdeadbeef, crypt_algo='AES-CBC', crypt_key=key)
+        sa = scapy.SecurityAssociation(scapy.ESP, spi=spi, crypt_algo='AES-CBC', crypt_key=key)
 
         d = sa.decrypt(self.data)
 

@@ -1,0 +1,26 @@
+<meta http-equiv="refresh" content="10" >
+<div style="width: 100%; display: table;">
+    <div style="display: table-row">
+        <div style="width: 50%; display: table-cell;">
+            <h3>App Monitor</h3>
+            <div id="left" style="overflow:scroll; height:400px;">  
+                Left 
+                {% for event in appMonitor_list %} 
+                <p>{{ event }} </p> 
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div style="display: table-cell;"> 
+            <h3>Network Monitor</h3>
+            <div id="right" style="overflow:scroll; height:400px;"> 
+                Right  
+                {% for event in netMonitor_list %} 
+                <p>{{ event }} </p> 
+                {% endfor %}
+               
+            </div>
+            
+        </div>
+    </div>
+</div>
