@@ -8,7 +8,7 @@ import sqlite3
 import time
 from queue import Queue
 from threading import Thread
-from IpSec import IpSec, Messeng
+from IpSec import IpSec, Messeng, IKE2
 import socket
 import copy
 
@@ -24,9 +24,13 @@ currentTalk=None
 
 class Contac():
     id = 1 
-    key = None
     dataOfCreation = datetime.now
     spi = spi=0x0000
+    ike = IKE2()
+    ike.generatePublicKey()
+    ike.generatePrivateKey(   ike.generatePublicKey())
+    key = ike.currentKey
+
  
     def __init__(self,name,ipAddress):
         self.name = name

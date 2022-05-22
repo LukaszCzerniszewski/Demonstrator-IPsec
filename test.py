@@ -1,10 +1,12 @@
-
+from ctypes import sizeof
+import pyDH
 import time
 from queue import Queue
 from threading import Thread
 import communication
-from IpSec import IpSec, Messeng
-
+from IpSec import IpSec, Messeng, IKE2
+import copy
+import pickle
 
 
 
@@ -30,57 +32,106 @@ def client(quote,messeng):
 
 
 
+
 if __name__ == "__main__":
 
-    q = Queue()
+    d1 = IKE2()
+    d2 = IKE2()
+    d1_pubkey = d1.generatePublicKey()
+    d2_pubkey = d2.generatePublicKey()
+    print("d1_pubkey = " , d1_pubkey, " || d2_pubkey = ", d2_pubkey)
+    d1_sharedkey = d1.generatePrivateKey(d2_pubkey)
+    d2_sharedkey = d2.generatePrivateKey(d1_pubkey)
+    print("d1_sharedkey = " , d1_sharedkey, " || d2_sharedkey = ", d2_sharedkey, "type = ", type(d1_sharedkey))
 
-    t1 = Thread(target = serwer, args =(q,))
+    print(d1_sharedkey == d2_sharedkey)
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    # q = Queue()
 
-    #t2 = Thread(target = client, args =(q,messeng))
+    # t1 = Thread(target = serwer, args =(q,))
 
-    t1.start()
+    # #t2 = Thread(target = client, args =(q,messeng))
 
-    #t2.start()
+    # t1.start()
 
-    counter = 1
+    # #t2.start()
 
-    while True:
+    # counter = 1
 
-        print('d')
+    # while True:
+
+    #     print('d')
 
        
 
-        data = 'Zaszyfrowana wiadomosc numer ' + str(counter)
+    #     data = 'Zaszyfrowana wiadomosc numer ' + str(counter)
 
-        counter+=1
+    #     counter+=1
 
-        pakiet = IpSec(data ,'127.0.0.1')
+    #     pakiet = IpSec(data ,'127.0.0.1')
 
-        pakiet.encryptdata(None)
+    #     pakiet.encryptdata(None)
 
 
 
-        #sa = SecurityAssociation(ESP, spi=0xdeadbeef, crypt_algo='AES-CBC', crypt_key=b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd')
+    #     #sa = SecurityAssociation(ESP, spi=0xdeadbeef, crypt_algo='AES-CBC', crypt_key=b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd')
 
    
-        time.sleep(3)
-        communication.Client.sendMesseng('127.0.0.1',pakiet.toBytes())
+    #     time.sleep(3)
+    #     communication.Client.sendMesseng('127.0.0.1',pakiet.toBytes())
 
      
 
-        odczyatana  = IpSec.fromBytes(q.get())
+    #     odczyatana  = IpSec.fromBytes(q.get())
 
-        print("Wiadomosc  odczyatana",odczyatana.data)
-
-
+    #     print("Wiadomosc  odczyatana",odczyatana.data)
 
 
 
-        odszyfrowana = odczyatana.decryptdata(None)
 
-        print("Wiadomosc  odszyfrowana",type(odszyfrowana.data))
 
-        print("Wiadomosc  odszyfrowana",odszyfrowana.data)
+    #     odszyfrowana = odczyatana.decryptdata(None)
+
+    #     print("Wiadomosc  odszyfrowana",type(odszyfrowana.data))
+
+    #     print("Wiadomosc  odszyfrowana",odszyfrowana.data)
 
 
 
@@ -98,6 +149,3 @@ if __name__ == "__main__":
     #print('Server posiada w buforze', srv.msgBuffor)
 
     #print(p1.stdout)
-
-   
-

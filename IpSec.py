@@ -2,8 +2,9 @@ from datetime import datetime
 import pickle
 import copy
 import socket
+import pyDH
 from scapy import all as scapy
-
+import time
 
 
 
@@ -37,7 +38,8 @@ class IpSec:
 
     def encryptdata(self, key, spi):
 
-        key = b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd'
+        #key = b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd'
+        #key = b'\x80\x04\x95D\x00\x00\x00\x00\x00\x00\x00\x8c@953' 
 
         #srcIp = socket.gethostbyname(socket.gethostname())
 
@@ -65,7 +67,8 @@ class IpSec:
 
     def decryptdata(self, key, spi):
 
-        key = b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd'
+        #key = b'-\xbd\xb6Q\xa6\x7f6c\x08\xb7\x0coU\xcfg\xcd'
+        #key = b'\x80\x04\x95D\x00\x00\x00\x00\x00\x00\x00\x8c@953' 
 
         sa = scapy.SecurityAssociation(scapy.ESP, spi=spi, crypt_algo='AES-CBC', crypt_key=key)
 
@@ -104,4 +107,26 @@ class Messeng():
 
 
 
-  
+class IKE2():
+    currentKey = b'\x80\x04\x95D\x00\x00\x00\x00\x00\x00\x00\x8c@953' 
+    lastKeyExchange = None
+    dH = pyDH.DiffieHellman()
+    pubkey = None
+    
+    def __init__(self) -> None:
+        pass  
+
+    def generatePublicKey(self):
+        self.pubkey = self.dH.gen_public_key()
+        return self.pubkey
+
+
+    def generatePrivateKey(self,inComeKey):
+        self.currentKey = self.dH.gen_shared_key(inComeKey)
+        self.currentKey  = pickle.dumps(self.currentKey)[0:16]
+        self.lastKeyExchange = time.time()
+        return self.currentKey
+
+
+   
+   

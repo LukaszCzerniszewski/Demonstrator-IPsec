@@ -20,6 +20,7 @@ class Server():
         s.listen(1)
         while (True and self.serverStatus == True):
             conn, addr = s.accept()
+            
             #print ('Connection address:', addr)
             data = conn.recv(self.bufferSize )
             if not data: break
