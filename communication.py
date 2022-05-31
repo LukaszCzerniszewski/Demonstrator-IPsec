@@ -4,7 +4,8 @@ import os
 import sys
 from IpSec import IpSec, Messeng
 class Server():
-    ownIpAdress = "127.0.0.1"
+    #ownIpAdress = "127.0.0.1"
+    ownIpAdress = "192.168.1.2"
     localPort   = 5005
     bufferSize  = 1024
     serverStatus = True
@@ -42,7 +43,8 @@ class Server():
 
 
 class Client():
-    def sendMesseng(dstIp,data):   
+    def sendMesseng(dstIp,data):
+        dstIp =    "192.168.1.2"
         TCP_PORT = 5005
         BUFFER_SIZE = 1024
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
