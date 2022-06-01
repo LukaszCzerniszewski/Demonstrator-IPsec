@@ -1,12 +1,14 @@
+from ast import Bytes
 import socket
 import pickle
 import os
 import sys
 from IpSec import IpSec, Messeng
 class Server():
-    #ownIpAdress = "127.0.0.1"
-    ownIpAdress = "192.168.1.2"
-    localPort   = 5005
+    #ownIpAdress = "127.0.1.1"
+    
+    #ownIpAdress = "192.168.1.2"
+    localPort   = 80
     bufferSize  = 1024
     serverStatus = True
     msgBuffor = None
@@ -15,7 +17,8 @@ class Server():
         self.quote=quote
 
     
-    def start(self): 
+    def start(self):
+        self.ownIpAdress = "127.0.1.1" 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.bind((self.ownIpAdress, self.localPort))
         s.listen(1)
@@ -25,11 +28,16 @@ class Server():
             #print ('Connection address:', addr)
             data = conn.recv(self.bufferSize )
             if not data: break
-            odczyatana  = IpSec.fromBytes(data)
-          
-            self.quote.put(Messeng(odczyatana,str(addr[0]),str(self.ownIpAdress)))
-            #self.quote.put(data)
-            #print ("received data:", data)
+            data = pickle.loads(data)
+            
+            if data[0] == 0 :
+                odczyatana = data
+                odczyatana[1]  = IpSec.fromBytes(data[1])
+                self.quote.put(Messeng(odczyatana,str(addr[0]),str(self.ownIpAdress)))
+                #self.quote.put(data)
+                #print ("received data:", data)
+            
+            
             conn.send(pickle.dumps('repo'))  # echo
             conn.close()
      
@@ -44,21 +52,22 @@ class Server():
 
 class Client():
     def sendMesseng(dstIp,data):
-        dstIp =    "192.168.1.2"
-        TCP_PORT = 5005
+        #dstIp =    "127.0.1.1"
+        dstIP = "127.0.1.1"
+        TCP_PORT = 80
         BUFFER_SIZE = 1024
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((dstIp, TCP_PORT))
        
-        s.send(data)
+        s.send(pickle.dumps(data))
         data = s.recv(BUFFER_SIZE)
         s.close()
         print ("received data:", data)
 
 
+#Lista komunikatw wysyanych przez Clienta [komunikat,dana]:
+    #0 - Wiadomosc
+    #1 - KLucz publiczny z wymuszeniem wymiany 
+    #2- Klucz publiczny jako odpowiedz
 
 
-
-
-
-  

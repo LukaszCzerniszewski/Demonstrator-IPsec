@@ -65,7 +65,7 @@ def client(messeng,currentTalk):
     netMonitor.put(str("Wyslana wiadomosc  = " +  str(pakiet.data) + " na adres " + str(pakiet.dstIP)))
    
 
-    communication.Client.sendMesseng( socket.gethostbyname(socket.gethostname()),pakiet.toBytes())
+    communication.Client.sendMesseng( socket.gethostbyname(socket.gethostname()),[0,pakiet.toBytes()])
 
 
 def addContactsToList():
@@ -83,16 +83,12 @@ def home():
     currentTalk, contact_list = addContactsToList()
     print('Strona Głowna',currentTalk.name, flush=True)
     while not  reciveQueue.empty():
-
-
         taken = reciveQueue.get()
-        netMonitor.put(str("Wiadomosc otrzymana przez serwer  = " +  str(taken.msg.data) + " od " + str(taken.srcIP)))
-        
-
-        odszyfrowana = taken.msg.decryptdata(currentTalk.key,currentTalk.spi)
-        appMonitor.put(str("otrzymana widomosc  = " +  str(odszyfrowana.data ) ))
-       
-        your_list.insert(0,Messeng('L',odszyfrowana.data,taken.srcIP, taken.dstIP)) 
+        if taken.msg[0] == 0:
+            netMonitor.put(str("Wiadomosc otrzymana przez serwer  = " +  str(taken.msg[1].data) + " od " + str(taken.srcIP)))
+            odszyfrowana = taken.msg[1].decryptdata(currentTalk.key,currentTalk.spi)
+            appMonitor.put(str("otrzymana widomosc  = " +  str(odszyfrowana.data ) ))
+            your_list.insert(0,Messeng('L',odszyfrowana.data,taken.srcIP, taken.dstIP)) 
     if request.method == 'POST':
         if request.form.get('action1') == 'Add':
             contakt = Contac(request.form["newContactname"],request.form["newContactIp"])
