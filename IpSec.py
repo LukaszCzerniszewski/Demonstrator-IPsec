@@ -45,7 +45,11 @@ class IpSec:
     def decryptdata(self, key, spi):
         sa = scapy.SecurityAssociation(scapy.ESP, spi=spi, crypt_algo='AES-CBC', crypt_key=key)
         d = sa.decrypt(self.data)
-        self.data = str(d[2])[2:-1]
+        #self.data = str(d[2])[2:-1]
+        try:
+            self.data = str(d[2])[2:-1]
+        except:
+            print("Bald odczytu len = ", len(d), "affw",d, flush=True)
         return self
 
 
