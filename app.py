@@ -72,8 +72,13 @@ def client(messeng,currentTalk):
             print ("taken.msg[0] == 2:", taken.msg[1], flush=True)
             currentTalk.ike.generatePrivateKey(taken.msg[1])
             print ("taken.msg[0] == 2 -1:", currentTalk.ike.currentKey, flush=True)
-    
             currentTalk.key = currentTalk.ike.currentKey
+            
+            appMonitor.put("Otrzymano prosbe o wynegocjowanie nowego klucza otrzymany klucz publiczny = " + str(taken.msg[1])[:20])
+            appMonitor.put("Wyslany  klucz  publiczny = " + str(currentTalk.ike.pubkey)[:20])
+            appMonitor.put("Obliczony klucz prywatny  = " + str(currentTalk.key)[:20])
+
+           
             print ("taken.msg[0] == 2 -2:", currentTalk.ike.currentKey, flush=True)
 
 
@@ -120,13 +125,18 @@ def home():
             print ("taken.msg[0] == 1:", taken.msg[1], flush=True)
             currentTalk.ike.pubkey =taken.msg[1]
         
-        elif taken.msg[0] == 2: 
+        elif taken.msg[0] == 2:
+
             print ("taken.msg[0] == 2:", taken.msg[1], flush=True)
             currentTalk.ike.generatePrivateKey(taken.msg[1])
             print ("taken.msg[0] == 2 -1:", currentTalk.ike.currentKey, flush=True)
     
             currentTalk.key = currentTalk.ike.currentKey
+            appMonitor.put("Otrzymano prosbe o wynegocjowanie nowego klucza otrzymany klucz publiczny = " + str(taken.msg[1])[:20])
+            appMonitor.put("Wyslany  klucz  publiczny = " + str(currentTalk.ike.pubkey)[:20])
+            appMonitor.put("Obliczony klucz prywatny  = " + str(currentTalk.ike.currentTalk.key))
             print ("taken.msg[0] == 2 -2:", currentTalk.ike.currentKey, flush=True)
+             
 
     if request.method == 'POST':
         if request.form.get('action1') == 'Add':
