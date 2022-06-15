@@ -54,6 +54,30 @@ def serwer(quote,reciveQueue):
     
 
 def client(messeng,currentTalk):
+    ### ------- Wyczyszczenie kolejki serwera przed wysaniem 
+    time.sleep(1)
+    while not  reciveQueue.empty():
+        taken = reciveQueue.get()
+        if taken.msg[0] == 0:
+            #netMonitor.put(str("Wiadomosc otrzymana przez serwer  = " +  str(taken.msg[1].data) + " od " + str(taken.srcIP)))
+            odszyfrowana = taken.msg[1].decryptdata(currentTalk.key,currentTalk.spi)
+            appMonitor.put(str("otrzymana widomosc  = " +  str(odszyfrowana.data ) ))
+            your_list.insert(0,Messeng('L',odszyfrowana.data,taken.srcIP, taken.dstIP)) 
+        
+        elif taken.msg[0] == 1: 
+            print ("taken.msg[0] == 1:", taken.msg[1], flush=True)
+            currentTalk.ike.pubkey =taken.msg[1]
+        
+        elif taken.msg[0] == 2: 
+            print ("taken.msg[0] == 2:", taken.msg[1], flush=True)
+            currentTalk.ike.generatePrivateKey(taken.msg[1])
+            print ("taken.msg[0] == 2 -1:", currentTalk.ike.currentKey, flush=True)
+    
+            currentTalk.key = currentTalk.ike.currentKey
+            print ("taken.msg[0] == 2 -2:", currentTalk.ike.currentKey, flush=True)
+
+
+
     pakiet = IpSec(messeng ,currentTalk.ipAddress)
 
     #Zapisywanie komunikatow do kolejski do wyswietlenia w monitorze
