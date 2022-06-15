@@ -1,26 +1,87 @@
-<meta http-equiv="refresh" content="10" >
-<div style="width: 100%; display: table;">
-    <div style="display: table-row">
-        <div style="width: 50%; display: table-cell;">
-            <h3>App Monitor</h3>
-            <div id="left" style="overflow:scroll; height:400px; overflow-x: scroll;">  
-                Left 
-                {% for event in appMonitor_list %} 
-                <p>{{ event }} </p> 
-                {% endfor %}
-            </div>
-        </div>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  margin-left:-5px;
+  margin-right:-5px;
+}
+
+.column {
+  flex: 50%;
+  padding: 5px;
+  width: 40%;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+</style>
+</head>
+<body>
+
+<h2>Admin monitor of IPsec implementation</h2>
+<div class="row">
+    <div class="column">
+        <table>
+          <tr>
+            <th>App Monitor</th>
+          
+          </tr>
+          
+
+            {% for event in appMonitor_list %} 
+            <tr>
+            <td>
+            {{ event }} 
+            </td> 
+            </tr>
+            {% endfor %}
+          
+         
+         
+         
+        </table>
+      </div>
+  <div class="column">
+    <table>
+        <tr>
+          <th>Net Monitor</th>
         
-        <div style="display: table-cell;"> 
-            <h3>Network Monitor</h3>
-            <div id="right" style="overflow:scroll; height:400px; overflow-x: scroll;"> 
-                Right  
-                {% for event in netMonitor_list %} 
-                <p>{{ event }} </p> 
-                {% endfor %}
-               
-            </div>
-            
-        </div>
-    </div>
+        </tr>
+        
+
+          {% for event in netMonitor_list %} 
+          <tr>
+          <td>
+          {{ event }} 
+          </td> 
+          </tr>
+          {% endfor %}
+        
+       
+       
+       
+      </table>
+  </div>
 </div>
+
+</body>
+</html>
